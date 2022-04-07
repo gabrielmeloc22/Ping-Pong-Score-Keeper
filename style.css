@@ -6,6 +6,14 @@
   font-family: "Merriweather Sans";
 }
 
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
 h1 {
   font: 700 1.25rem "Merriweather Sans", sans-serif;
   padding: 1.5rem;
@@ -13,19 +21,29 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.mainWrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  align-items: center;
+#winner {
+  position: absolute;
+  font-size: 3em;
+  font-weight: 900;
+  transform: translateY(-50vh);
+  color: #ffffff00;
+  transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+  z-index: -1;
+}
+
+#winner.transition-1 {
+  transform: translateY(-30vh);
+  color: #ff006e;
+}
+
+#winner.transition-2 {
+  transform: translateY(-30vh);
+  color: #8338ec;
 }
 
 .card {
   max-width: 400px;
   width: 90vw;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
   background-color: rgb(255, 255, 255);
   border-radius: 2em;
   box-shadow: 2px 2px 15px 2px #8338ec2c;
@@ -40,14 +58,6 @@ h1 {
   gap: 1.5rem;
 }
 
-#scoreSelector {
-  align-self: flex-start;
-}
-
-#scoreLabel {
-  font-size: em;
-}
-
 .score {
   font-size: 2.5rem;
   font-weight: 700;
@@ -59,36 +69,27 @@ h1 {
   align-items: center;
 }
 
-#winner {
-  position: absolute;
-  text-align: center;
-  font-size: 3em;
-  font-weight: 900;
-  padding-top: 20vh;
-  transform: translateY(-300px);
-  color: #ffffff00;
-  width: 40rem;
-  transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
-  z-index: -1;
+#scoreSelector {
+  padding: 0.25rem 0.5rem;
+  border-radius: 1em;
+  border: 2px solid rgba(0, 0, 0, 0.151);
 }
 
-#winner.transition-1 {
-  transform: translateY(0);
-  color: #ff006e;
+#scoreSelector:hover {
+  cursor: pointer;
 }
 
-#winner.transition-2 {
-  transform: translateY(0);
-  color: #8338ec;
+#scoreSelector:disabled {
+  cursor: default;
 }
 
 .buttonWrapper {
   display: flex;
-  flex: wrap;
   justify-content: space-between;
 }
 
 .btn {
+  min-width: 120px;
   padding: 1em 1.5em;
   border: none;
   border-radius: 2em;
@@ -104,7 +105,6 @@ h1 {
 }
 
 #playerOneBtn {
-  min-width: 120px;
   background-color: #ffffff;
   color: #ff006e;
   box-shadow: 1px 1px 10px 1px #431a7c18;
@@ -115,7 +115,6 @@ h1 {
 }
 
 #playerTwoBtn {
-  min-width: 120px;
   background-color: white;
   box-shadow: 1px 1px 10px 1px #431a7c18;
   color: #8338ec;
@@ -135,16 +134,4 @@ h1 {
 #resetBtn:hover {
   background-color: #3a86ff;
   color: white;
-}
-
-#scoreSelector {
-  padding: 0.25rem 0.5rem;
-  border-radius: 1em;
-  border: 2px solid rgba(0, 0, 0, 0.151);
-}
-#scoreSelector:hover {
-  cursor: pointer;
-}
-#scoreSelector:disabled {
-  cursor: default;
 }

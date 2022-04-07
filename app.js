@@ -11,76 +11,65 @@ const scoreSelector = document.querySelector("#scoreSelector");
 const winnerHeading = document.querySelector("h2");
 
 function scoreInterface(scoreElement, e) {
-  const scoring = parseInt(
-    scoreSelector.options[scoreSelector.options.selectedIndex].value
-  );
+  const scoring = parseInt(scoreSelector.value);
+
   let pOneScore = parseInt(pOneScoreElement.innerText);
   let pTwoScore = parseInt(pTwoScoreElement.innerText);
 
-  const winner = function (e) {
-    if (pOneScore >= pTwoScore && e.target == playerOneBtn) {
-      winnerHeading.innerText = "Player 1 won!";
-      winnerHeading.classList.toggle("transition-1");
-      console.log("hello");
-    } else {
-      winnerHeading.innerText = "Player 2 won!";
-      winnerHeading.classList.toggle("transition-2");
-    }
-  };
-
-  if (pOneScore + 1 === scoring || pTwoScore + 1 === scoring) {
-    if (pOneScore === pTwoScore) {
-      addScore(scoreElement);
-      disableScoreBtn();
-      winner(e);
-    } else if (pOneScore > pTwoScore && e.target == playerOneBtn) {
-      addScore(scoreElement);
-      disableScoreBtn();
-      winner(e);
-    } else if (pOneScore < pTwoScore && e.target == playerTwoBtn) {
-      addScore(scoreElement);
-      disableScoreBtn();
-      winner(e);
-    } else {
-      addScore(scoreElement);
-    }
-  } else if (pOneScore === 0 && pTwoScore === 0) {
-    addScore(scoreElement);
-    scoreSelector.setAttribute("disabled", true);
+  if (e.target === playerOneBtn) {
+    addScore(scoreElement, pOneScore, scoring, e);
   } else {
-    addScore(scoreElement);
+    addScore(scoreElement, pTwoScore, scoring, e);
   }
 }
 
-function addScore(scoreElement) {
-  const currScore = parseInt(scoreElement.innerText);
-  const newScore = currScore + 1;
-  scoreElement.innerText = newScore;
-}
-
-function disableScoreBtn() {
-  playerOneBtn.setAttribute("disabled", true);
-  playerTwoBtn.setAttribute("disabled", true);
+function addScore(scoreElement, playerScore, scoring, e) {
+  playerScore++;
+  if (playerScore === scoring) {
+    disableScoreBtn(true);
+    displayWinner(e);
+  }
+  scoreElement.innerText = playerScore;
 }
 
 function reset() {
-  playerOneBtn.removeAttribute("disabled");
-  pOneScoreElement.innerText = "0";
-
-  playerTwoBtn.removeAttribute("disabled");
-  pTwoScoreElement.innerText = "0";
+  pOneScoreElement.innerText = 0;
+  pTwoScoreElement.innerText = 0;
+  disableScoreBtn(false);
 
   scoreSelector.removeAttribute("disabled");
   winnerHeading.classList.remove("transition-1");
   winnerHeading.classList.remove("transition-2");
 }
 
+function disableScoreBtn(value) {
+  if (value === true) {
+    playerTwoBtn.setAttribute("disabled", true);
+    playerOneBtn.setAttribute("disabled", true);
+  } else {
+    playerTwoBtn.removeAttribute("disabled");
+    playerOneBtn.removeAttribute("disabled");
+  }
+}
+
+function displayWinner(e) {
+  if (e.target == playerOneBtn) {
+    winnerHeading.innerText = "Player 1 won!";
+    winnerHeading.classList.toggle("transition-1");
+  } else {
+    winnerHeading.innerText = "Player 2 won!";
+    winnerHeading.classList.toggle("transition-2");
+  }
+}
+
 playerOneBtn.addEventListener("click", (e) => {
   scoreInterface(pOneScoreElement, e);
+  scoreSelector.setAttribute("disabled", true);
 });
 
 playerTwoBtn.addEventListener("click", (e) => {
   scoreInterface(pTwoScoreElement, e);
+  scoreSelector.setAttribute("disabled", true);
 });
 
 resetBtn.addEventListener("click", () => {
